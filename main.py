@@ -144,7 +144,7 @@ while (True):
         voice.speak(file.read(6))
         
      #play the local directory video song
-    elif "play video song" in query.lower():
+    elif "play video song" in query.lower():        
         list_dir=[os.path.join(v_path,f) for f in os.listdir(v_path)]
         voice.speak("Which Song I play:")
         v_song=takecommand()
@@ -153,7 +153,7 @@ while (True):
                 os.startfile(file)
                 
       #Play the local directory movie          
-     elif "play movie" in query.lower():
+    elif "play movie" in query.lower():        
         list_dir=[os.path.join(m_path,f) for f in os.listdir(m_path)]
         voice.speak("Which Song I play:")
         m_name=takecommand()
@@ -161,8 +161,8 @@ while (True):
             if m_name in file.lower():
                 os.startfile(file)
                 
-       #play the local directory video song         
-     elif "play mp3 song" in query.lower():
+    #play the local directory video song  
+    elif "play mp3 song" in query.lower():        
         list_dir=[os.path.join(mp3_path,f) for f in os.listdir(mp3_path)]
         voice.speak("Which Song I play:")
         mp3_song=takecommand()
@@ -171,7 +171,8 @@ while (True):
                 os.startfile(file)
                 
        #response from chatbot    
-      else:
+    else:
+            
         reply= kernel.respond(query)
         print(reply)
         voice.speak(reply)
