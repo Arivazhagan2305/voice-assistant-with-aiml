@@ -10,14 +10,19 @@ import webbrowser
 
 
 MASTER=str(input("Enter your Name:"))
+#Paths for play video songs and movies in your local memory
+v_path = str(input("Enter Your Video Song Path:"))
+m_path = str(input("Enter Your Movies Path:"))
+mp3_path = str(input("Enter Your Movies Path:"))
 #code for voice.speak
 print("Intializing Jarvis..")
 voice.speak("Initailizing Jarvis...")
 loop_close = ['bye', 'buy', 'shutdown', 'exit', 'quit', 'gotosleep', 'goodbye']
 c=webbrowser.get("C://Program Files (x86)/Google//Chrome//Application//chrome.exe %s")
 url="google.com"
-import aiml
 
+#To intract with chatbot
+import aiml
 kernel = aiml.Kernel()
 if os.path.isfile("bot_brain.brn"):
     kernel.bootstrap(brainFile = "bot_brain.brn")
@@ -58,13 +63,11 @@ def sendEmail():
 wishme()
 while (True):
     query = voice.takecommand()
-    
-        
+          
     if query.lower().replace(" ", "") in loop_close:
         break
-    
-               
-
+        
+    #searching in wikipedia          
     elif 'wikipedia' in query.lower():
         
         voice.speak('searching wikipedia')
@@ -73,6 +76,7 @@ while (True):
         print(results)
         voice.speak(results)
         
+    #searching in wikipedia    
     elif 'who is' in query.lower():
         voice.speak('searching wikipedia')
         query = query.replace("who is","")
@@ -80,17 +84,18 @@ while (True):
         print(results)
         voice.speak(results)
         
-    
+    #To open the youtube    
     elif 'open youtube' in query.lower():
         url="youtube.com"
         c.open(url)
         
-        
+    #To open the google   
     elif 'open google' in query.lower():
         voice.speak("I'm on it sir")
         url="google.com"        
         c.open(url)
-
+        
+    #To search in google
     elif 'google about' in query.lower():
         query=query.replace("google about","")
         voice.speak('searching')
@@ -106,7 +111,7 @@ while (True):
         query= url + query.replace(" ","%20")
         webbrowser.open_new(query)
                        
-    
+    #To send a Email
     elif 'send email' in query.lower():
         try:
             sendEmail()
@@ -117,7 +122,8 @@ while (True):
             voice.speak("Check mail and password")
             break
 
-    elif "write a note" in query:
+    #To save a note
+    elif "write a note"  in query:
         voice.speak("What should i write , sir")
         note= voice.takecommand()
         file = open('jarvis.txt','w')
@@ -136,10 +142,39 @@ while (True):
         file = open("jarvis.txt", "r") 
         print(file.read())
         voice.speak(file.read(6))
-    else:
-         reply= kernel.respond(query)
-         print(reply)
-         voice.speak(reply)
+        
+     #play the local directory video song
+    elif "play video song" in query.lower():
+        list_dir=[os.path.join(v_path,f) for f in os.listdir(v_path)]
+        voice.speak("Which Song I play:")
+        v_song=takecommand()
+        for file in list_dir:
+            if v_song in file.lower():
+                os.startfile(file)
+                
+      #Play the local directory movie          
+     elif "play movie" in query.lower():
+        list_dir=[os.path.join(m_path,f) for f in os.listdir(m_path)]
+        voice.speak("Which Song I play:")
+        m_name=takecommand()
+        for file in list_dir:
+            if m_name in file.lower():
+                os.startfile(file)
+                
+       #play the local directory video song         
+     elif "play mp3 song" in query.lower():
+        list_dir=[os.path.join(mp3_path,f) for f in os.listdir(mp3_path)]
+        voice.speak("Which Song I play:")
+        mp3_song=takecommand()
+        for file in list_dir:
+            if mp3_song in file.lower():
+                os.startfile(file)
+                
+       #response from chatbot    
+      else:
+        reply= kernel.respond(query)
+        print(reply)
+        voice.speak(reply)
          
 
     
