@@ -161,7 +161,7 @@ while (True):
             if m_name in file.lower():
                 os.startfile(file)
                 
-    #play the local directory video song  
+    #play the local directory mp3 song  
     elif "play mp3 song" in query.lower():        
         list_dir=[os.path.join(mp3_path,f) for f in os.listdir(mp3_path)]
         voice.speak("Which Song I play:")
